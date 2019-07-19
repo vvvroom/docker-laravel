@@ -16,8 +16,10 @@ RUN docker-php-ext-install intl zip pdo_mysql bcmath
 RUN apt-get install -y libgd-dev
 RUN docker-php-ext-install gd
 
-# Apache rewrite module
+# Apache Modules
 RUN a2enmod rewrite
+RUN a2enmod deflate
+RUN a2enmod headers
 
 # Set Apache root directory
 RUN echo "Set Apache root directory"
