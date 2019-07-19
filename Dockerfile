@@ -1,6 +1,6 @@
 FROM composer:latest AS composer
 
-FROM php:7.2-apache
+FROM php:7.2-apache-stretch
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 WORKDIR /var/www/app
@@ -9,13 +9,12 @@ WORKDIR /var/www/app
 RUN apt-get update -y
 RUN apt-get install -y zlibc git zlib1g-dev libicu-dev g++
 
-# Install PHP intl
-RUN docker-php-ext-configure intl
-RUN docker-php-ext-install intl
+# Install PHP Extension required for Laravel
+RUN docker-php-ext-install intl zip pdo_mysql bcmath
 
-# Install PHP zip
-RUN docker-php-ext-configure zip
-RUN docker-php-ext-install zip
+# Install PHP GD
+RUN apt-get install -y libgd-dev
+RUN docker-php-ext-install gd
 
 # Apache rewrite module
 RUN a2enmod rewrite

@@ -7,7 +7,7 @@ docker build -t gusdecool/laravel .
 docker push gusdecool/laravel
 
 # Run
-docker run --rm \
+docker run --rm -d \
     -v ${PWD}/laravel:/var/www/app \
     -v ${HOME}/.composer:/root/.composer \
-    -p 8000:80 gusdecool/laravel
+    -p 7100:80 gusdecool/laravel
