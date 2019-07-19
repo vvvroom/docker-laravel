@@ -1,25 +1,24 @@
+FROM composer:latest AS composer
+
 FROM php:7.2-apache
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+
 WORKDIR /var/www/app
 
 # Requirement for Composer
 RUN apt-get update -y
-RUN apt-get install zlibc git -y
+RUN apt-get install -y zlibc git zlib1g-dev libicu-dev g++
 
-# Requirement for PHP intl
-RUN apt-get install -y zlib1g-dev libicu-dev g++
+# Install PHP intl
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-install intl
 
-# Requirement for PHP ZIP
+# Install PHP zip
 RUN docker-php-ext-configure zip
 RUN docker-php-ext-install zip
 
-# Install Composer
-RUN echo "Install Composer"
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-RUN php -r "unlink('composer-setup.php');"
+# Apache rewrite module
+RUN a2enmod rewrite
 
 # Set Apache root directory
 RUN echo "Set Apache root directory"
