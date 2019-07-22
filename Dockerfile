@@ -16,6 +16,11 @@ RUN docker-php-ext-install intl zip pdo_mysql bcmath
 RUN apt-get install -y libgd-dev
 RUN docker-php-ext-install gd
 
+# Install PHP XDebug
+RUN pecl install xdebug-2.7.2
+RUN docker-php-ext-enable xdebug
+COPY config/xdebug/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+
 # Apache Modules
 RUN a2enmod rewrite
 RUN a2enmod deflate
