@@ -30,6 +30,12 @@ RUN a2enmod rewrite
 RUN a2enmod deflate
 RUN a2enmod headers
 
+# Enable SSL
+RUN a2enmod ssl
+# "ssl-cert" will create snakeoil certificate
+RUN apt-get install -y ssl-cert
+RUN a2ensite default-ssl
+
 # Set Apache root directory
 RUN echo "Set Apache root directory"
 ENV APACHE_DOCUMENT_ROOT /var/www/app/public

@@ -16,7 +16,7 @@ of Laravel code is located at `/laravel` dir. Then the command to run the contai
 docker run --rm \
     -v ${PWD}/laravel:/var/www/app \
     -v ${HOME}/.composer:/root/.composer \
-    -p 8000:80 gusdecool/laravel
+    -p 7100:443 gusdecool/laravel
 ``` 
 
 If this is the first time we run the application, the first command we may want to do probably `composer install`
