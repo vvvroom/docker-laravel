@@ -21,6 +21,10 @@ RUN pecl install xdebug-2.7.2
 RUN docker-php-ext-enable xdebug
 COPY config/xdebug/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
+# Install PHP Soap
+RUN apt-get install -y libxml2-dev
+RUN docker-php-ext-install soap
+
 # Apache Modules
 RUN a2enmod rewrite
 RUN a2enmod deflate
@@ -32,3 +36,6 @@ ENV APACHE_DOCUMENT_ROOT /var/www/app/public
 
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+# Clean out directory
+RUN apt-get clean -y
