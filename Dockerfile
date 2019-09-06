@@ -5,12 +5,16 @@ COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 WORKDIR /var/www/app
 
+#--------------------------------------------------------------------------------------------------
+# Install base packages
+#--------------------------------------------------------------------------------------------------
+
 # Requirement for Composer
 RUN apt-get update -y
-RUN apt-get install -y zlibc git zlib1g-dev libicu-dev g++
+RUN apt-get install -y zlibc git zip unzip zlib1g-dev libicu-dev g++
 
 # Install PHP Extension required for Laravel
-RUN docker-php-ext-install intl zip pdo_mysql bcmath
+RUN docker-php-ext-install intl pdo_mysql bcmath
 
 # Install PHP GD
 RUN apt-get install -y libgd-dev
@@ -24,6 +28,10 @@ COPY config/xdebug/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 # Install PHP Soap
 RUN apt-get install -y libxml2-dev
 RUN docker-php-ext-install soap
+
+#--------------------------------------------------------------------------------------------------
+# Setup Apache
+#--------------------------------------------------------------------------------------------------
 
 # Apache Modules
 RUN a2enmod rewrite

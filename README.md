@@ -12,11 +12,34 @@ where web server for serving at.
 To do so, we will need mount our Laravel root codebase to `/var/www` directory. Example in this case, the root
 of Laravel code is located at `/laravel` dir. Then the command to run the container will looks like this:
 
-```bash
+```shell script
 docker run --rm \
     -v ${PWD}/laravel:/var/www/app \
     -v ${HOME}/.composer:/root/.composer \
-    -p 7100:443 gusdecool/laravel
+    -p 7100:443 vvvroom/laravel
 ``` 
 
 If this is the first time we run the application, the first command we may want to do probably `composer install`
+
+# Docker commands
+
+## Build
+
+```shell script
+docker build -t vvvroom/laravel .
+```
+
+## Run
+
+```shell script
+docker run --rm \
+    -v ${PWD}/laravel:/var/www/app \
+    -v ${HOME}/.composer:/root/.composer \
+    -p 7100:443 vvvroom/laravel
+```
+
+## Push
+
+```shell script
+docker push vvvroom/laravel
+```
