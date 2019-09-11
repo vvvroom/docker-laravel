@@ -35,7 +35,8 @@ docker build -t vvvroom/laravel .
 docker run --rm \
     -v ${PWD}/laravel:/var/www/app \
     -v ${HOME}/.composer:/root/.composer \
-    -p 7100:443 vvvroom/laravel
+    -p 7100:443 \
+    vvvroom/laravel
 ```
 
 ## Push
