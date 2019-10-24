@@ -4,6 +4,7 @@ FROM php:7.2-apache-stretch
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 WORKDIR /var/www/app
+ENV USER_HOME_DIR /root
 
 #--------------------------------------------------------------------------------------------------
 # Install base packages
@@ -57,6 +58,25 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 #--------------------------------------------------------------------------------------------------
 
 COPY config/xdebug/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+
+#--------------------------------------------------------------------------------------------------
+# Add Nodejs
+#--------------------------------------------------------------------------------------------------
+
+# APT update and install base package
+RUN apt-get install -y curl git openssh-client bash
+
+# Install Node v12 LTS, "gcc g++ make" is development tools to enable node build native addons
+RUN apt-get install -y gcc g++ make
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN apt-get install -y nodejs
+
+#--------------------------------------------------------------------------------------------------
+# Skip Host verification for git
+#--------------------------------------------------------------------------------------------------
+
+RUN mkdir ${USER_HOME_DIR}/.ssh/
+RUN echo "StrictHostKeyChecking no " > ${USER_HOME_DIR}/.ssh/config
 
 #--------------------------------------------------------------------------------------------------
 # Post setup

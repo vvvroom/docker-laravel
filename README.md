@@ -2,7 +2,14 @@
 
 # How to develop
 
-1. Have a copy of laravel codebase in `/laravel/` directory. We can install it with command `composer create-project --prefer-dist laravel/laravel laravel`
+1. Have a copy of laravel codebase in `/laravel/` directory. We can install it with command 
+
+```shell script
+docker run --rm \
+    -v ${PWD}:/app \
+    -v ${HOME}/.composer:/root/.composer \
+    composer create-project --prefer-dist laravel/laravel laravel
+```
 
 # How to run in single container
 
@@ -16,8 +23,9 @@ of Laravel code is located at `/laravel` dir. Then the command to run the contai
 docker run --rm \
     -v ${PWD}/laravel:/var/www/app \
     -v ${HOME}/.composer:/root/.composer \
-    -p 7100:443 vvvroom/laravel
-``` 
+    -p 7100:443 \
+    vvvroom/laravel
+```
 
 If this is the first time we run the application, the first command we may want to do probably `composer install`
 
