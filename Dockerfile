@@ -54,9 +54,10 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 #--------------------------------------------------------------------------------------------------
-# Setup XDebug
+# Setup PHP
 #--------------------------------------------------------------------------------------------------
 
+RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 COPY config/xdebug/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 #--------------------------------------------------------------------------------------------------
@@ -84,6 +85,12 @@ RUN npm install --global gulp-cli bower
 
 RUN mkdir ${USER_HOME_DIR}/.ssh/
 RUN echo "StrictHostKeyChecking no " > ${USER_HOME_DIR}/.ssh/config
+
+#--------------------------------------------------------------------------------------------------
+# Install additional software for debugging
+#--------------------------------------------------------------------------------------------------
+
+RUN apt-get install -y vim
 
 #--------------------------------------------------------------------------------------------------
 # Post setup
