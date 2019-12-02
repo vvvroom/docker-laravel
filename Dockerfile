@@ -34,33 +34,6 @@ RUN docker-php-ext-install soap
 RUN apt-get install -y ssl-cert
 
 #--------------------------------------------------------------------------------------------------
-# Setup Apache
-#--------------------------------------------------------------------------------------------------
-
-# Apache Modules
-RUN a2enmod rewrite
-RUN a2enmod deflate
-RUN a2enmod headers
-RUN a2enmod ssl
-
-# Enable SSL sites
-RUN a2ensite default-ssl
-
-# Set Apache root directory
-RUN echo "Set Apache root directory"
-ENV APACHE_DOCUMENT_ROOT /var/www/app/public
-
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
-
-#--------------------------------------------------------------------------------------------------
-# Setup PHP
-#--------------------------------------------------------------------------------------------------
-
-RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
-COPY config/xdebug/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
-
-#--------------------------------------------------------------------------------------------------
 # Add Nodejs
 #--------------------------------------------------------------------------------------------------
 
@@ -80,6 +53,12 @@ RUN apt-get install -y nodejs
 RUN npm install --global gulp-cli bower
 
 #--------------------------------------------------------------------------------------------------
+# Install additional software for debugging
+#--------------------------------------------------------------------------------------------------
+
+RUN apt-get install -y vim
+
+#--------------------------------------------------------------------------------------------------
 # Skip Host verification for git
 #--------------------------------------------------------------------------------------------------
 
@@ -87,10 +66,33 @@ RUN mkdir ${USER_HOME_DIR}/.ssh/
 RUN echo "StrictHostKeyChecking no " > ${USER_HOME_DIR}/.ssh/config
 
 #--------------------------------------------------------------------------------------------------
-# Install additional software for debugging
+# Setup Apache config
 #--------------------------------------------------------------------------------------------------
 
-RUN apt-get install -y vim
+# Apache Modules
+RUN a2enmod rewrite
+RUN a2enmod deflate
+RUN a2enmod headers
+RUN a2enmod ssl
+
+# Enable SSL sites
+RUN a2ensite default-ssl
+
+# Set Apache root directory
+RUN echo "Set Apache root directory"
+ENV APACHE_DOCUMENT_ROOT /var/www/app/public
+
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+#--------------------------------------------------------------------------------------------------
+# Setup PHP config
+#--------------------------------------------------------------------------------------------------
+
+RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
+RUN sed -i 's|error_reporting\s=\sE_ALL|error_reporting= E_ALL\|E_NOTICE|g' /usr/local/etc/php/php.ini
+
+COPY config/xdebug/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 #--------------------------------------------------------------------------------------------------
 # Post setup
