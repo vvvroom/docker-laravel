@@ -90,7 +90,7 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 #--------------------------------------------------------------------------------------------------
 
 RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
-RUN sed -i 's|error_reporting\s=\sE_ALL|error_reporting= E_ALL\|E_NOTICE|g' /usr/local/etc/php/php.ini
+RUN sed -i 's|error_reporting\s=\sE_ALL|error_reporting= E_ALL \| E_STRICT|g' /usr/local/etc/php/php.ini
 
 COPY config/xdebug/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
