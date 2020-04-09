@@ -5,6 +5,7 @@ services:
     build: ./
     volumes:
       - ./laravel:/var/www/app
+      - ./ssl-certificate:/ssl-certificate
       - composer_cache:/root/.composer/cache
     ports:
       - 7100:443
