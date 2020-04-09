@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  app:
+    image: vvvroom/laravel
+    build: ./
+    volumes:
+      - ./laravel:/app
+      - composer_cache:/root/.composer/cache
+    ports:
+      - 7100:443
+volumes:
+  composer_cache:
+      driver: local
