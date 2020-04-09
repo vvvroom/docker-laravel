@@ -4,7 +4,7 @@ services:
     image: vvvroom/laravel
     build: ./
     volumes:
-      - ./laravel:/app
+      - ./laravel:/var/www/app
       - composer_cache:/root/.composer/cache
     ports:
       - 7100:443
