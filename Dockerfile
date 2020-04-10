@@ -79,7 +79,8 @@ ENV APACHE_DOCUMENT_ROOT /var/www/app/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Setup SSL to use chain file
+# Setup SSL the SSL
+COPY ./ssl-certificate /ssl-certificate
 RUN sed -ri -e 's!SSLCertificateFile\s+/etc/ssl/certs/ssl-cert-snakeoil.pem!SSLCertificateFile /ssl-certificate/server.crt!g' /etc/apache2/sites-available/default-ssl.conf
 RUN sed -ri -e 's!SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key!SSLCertificateKeyFile /ssl-certificate/server.key!g' /etc/apache2/sites-available/default-ssl.conf
 
