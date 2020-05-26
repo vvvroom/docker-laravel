@@ -96,6 +96,17 @@ RUN sed -i 's|error_reporting\s=\sE_ALL|error_reporting= E_ALL \| E_STRICT|g' /u
 
 COPY config/xdebug/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
+# Install OPCache
+RUN docker-php-ext-install opcache
+RUN sed -i \
+    -e "s/\$/\nopcache.enable=1/" \
+    -e "s/\$/\nopcache.enable_cli=1/" \
+    -e "s/\$/\nopcache.memory_consumption=128/" \
+    -e "s/\$/\nopcache.interned_strings_buffer=8/" \
+    -e "s/\$/\nopcache.max_accelerated_files=4000/" \
+    -e "s/\$/\nopcache.revalidate_freq=60/" \
+    /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+
 #--------------------------------------------------------------------------------------------------
 # Post setup
 #--------------------------------------------------------------------------------------------------
