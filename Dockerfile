@@ -104,6 +104,9 @@ RUN sed -i \
     -e "s/\$/\nopcache.revalidate_freq=60/" \
     /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
+# Set memory limit
+RUN sed -i "s|memory_limit = 128M|memory_limit = 1024M|g" /usr/local/etc/php/php.ini
+
 #--------------------------------------------------------------------------------------------------
 # Post setup
 #--------------------------------------------------------------------------------------------------
