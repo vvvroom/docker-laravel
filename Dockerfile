@@ -98,10 +98,13 @@ RUN docker-php-ext-install opcache
 RUN sed -i \
     -e "s/\$/\nopcache.enable=1/" \
     -e "s/\$/\nopcache.enable_cli=1/" \
-    -e "s/\$/\nopcache.memory_consumption=128/" \
+    -e "s/\$/\nopcache.memory_consumption=200/" \
     -e "s/\$/\nopcache.interned_strings_buffer=8/" \
-    -e "s/\$/\nopcache.max_accelerated_files=4000/" \
-    -e "s/\$/\nopcache.revalidate_freq=60/" \
+    -e "s/\$/\nopcache.max_accelerated_files=10000/" \
+    -e "s/\$/\nopcache.revalidate_freq=2/" \
+    -e "s/\$/\nopcache.validate_timestamps=1/" \
+    -e "s/\$/\nopcache.max_wasted_percentage=10/" \
+    -e "s/\$/\nopcache.interned_strings_buffer=10/" \
     /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 # Set memory limit
