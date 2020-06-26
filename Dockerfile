@@ -70,6 +70,7 @@ RUN a2ensite default-ssl
 # Setup INI
 RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 RUN sed -i "s|error_reporting\s=\sE_ALL|error_reporting= E_ALL \| E_STRICT|g" /usr/local/etc/php/php.ini
+RUN sed -i "s|memory_limit = 1024M|memory_limit = 2024M|g" /usr/local/etc/php/php.ini
 
 # Install PHP Extension required for Laravel
 RUN docker-php-ext-install intl pdo_mysql bcmath
@@ -106,6 +107,10 @@ RUN sed -i \
     -e "s/\$/\nopcache.max_wasted_percentage=10/" \
     -e "s/\$/\nopcache.interned_strings_buffer=10/" \
     /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+
+# Install ext-zip
+RUN apt-get install -y libzip-dev
+RUN docker-php-ext-install zip
 
 # Set memory limit
 RUN sed -i "s|memory_limit = 128M|memory_limit = 1024M|g" /usr/local/etc/php/php.ini
