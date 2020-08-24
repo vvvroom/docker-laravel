@@ -22,6 +22,6 @@ docker-compose exec app composer install
 
 ## Notes
 
-`ssl-certificate` directory contains the root certificate. 
+`ssl-certificate` directory contains the dummy root certificate. 
 The password key is `123456`. Use tutorial from https://github.com/gusdecool/local-cert-generator
 to generate new certificate if needed or expired.
