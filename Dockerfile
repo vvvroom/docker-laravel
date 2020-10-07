@@ -110,7 +110,7 @@ RUN docker-php-ext-install zip
 # Setup INI
 RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 RUN sed -i "s|error_reporting\s=\sE_ALL|error_reporting= E_ALL \| E_STRICT|g" /usr/local/etc/php/php.ini
-RUN sed -i "s|memory_limit = 128M|memory_limit = 2024M|g" /usr/local/etc/php/php.ini
+RUN sed -i "s|memory_limit = 128M|memory_limit = 3000M|g" /usr/local/etc/php/php.ini
 RUN sed -i "s|max_execution_time = 30|max_execution_time = 300|g" /usr/local/etc/php/php.ini
 
 #--------------------------------------------------------------------------------------------------
