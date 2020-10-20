@@ -99,9 +99,8 @@ RUN a2ensite default-ssl
 RUN sed -i \
     -e "s/\$/\nxdebug.remote_enable=1/" \
     -e "s/\$/\nxdebug.remote_autostart=1/" \
-    -e "s/\$/\nxdebug.remote_connect_back=0/" \
-    -e "s/\$/\nxdebug.profiler_enable=0/" \
     -e "s/\$/\nxdebug.idekey=\"PHPSTORM\"/" \
+    -e "s/\$/\nxdebug.remote_port=9000/" \
     -e "s/\$/\nxdebug.remote_host=host.docker.internal/" \
     /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 

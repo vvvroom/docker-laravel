@@ -8,8 +8,6 @@ services:
       - composer_cache:/root/.composer/cache
     ports:
       - 7100:443
-    environment:
-      - PHP_IDE_CONFIG='serverName=docker_laravel'
 volumes:
   composer_cache:
       driver: local
