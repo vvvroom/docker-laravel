@@ -1,13 +1,25 @@
 version: '3.7'
 services:
-  app:
-    image: vvvroom/laravel
-    build: ./
+  php73:
+    image: vvvroom/laravel:7.3
+    build:
+      context: .
+      dockerfile: php73.Dockerfile
     volumes:
       - ./laravel:/var/www/app
       - composer_cache:/root/.composer/cache
     ports:
       - 7100:443
+  php74:
+    image: vvvroom/laravel:7.4
+    build:
+      context: .
+      dockerfile: php74.Dockerfile
+    volumes:
+      - ./laravel:/var/www/app
+      - composer_cache:/root/.composer/cache
+    ports:
+      - 7101:443
 volumes:
   composer_cache:
       driver: local
