@@ -98,7 +98,8 @@ RUN a2ensite default-ssl
 # Xdebug
 RUN sed -i \
     -e "s/\$/\nxdebug.mode=\"debug\"/" \
-    -e "s/\$/\nxdebug.start_with_request=\"no\"/" \
+    -e "s/\$/\nxdebug.start_with_request=\"trigger\"/" \
+    -e "s/\$/\nxdebug.trigger_value=\"laravel\"/" \
     -e "s/\$/\nxdebug.idekey=\"PHPSTORM\"/" \
     -e "s/\$/\nxdebug.client_port=9000/" \
     -e "s/\$/\nxdebug.client_host=host.docker.internal/" \
