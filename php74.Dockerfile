@@ -97,7 +97,10 @@ RUN a2ensite default-ssl
 
 # Xdebug
 RUN sed -i \
-    -e "s/\$/\nxdebug.mode=\"develop,debug\"/" \
+    -e "s/\$/\nxdebug.mode=\"develop,debug,profile\"/" \
+    -e "s/\$/\nxdebug.profiler_append=1/" \
+    -e "s/\$/\nxdebug.profiler_output_name=cachegrind.out.%t/" \
+    -e "s/\$/\nxdebug.output_dir=\"\/var\/www\/app\/storage\/xdebug\"/" \
     -e "s/\$/\nxdebug.start_with_request=\"trigger\"/" \
     -e "s/\$/\nxdebug.idekey=\"PHPSTORM\"/" \
     -e "s/\$/\nxdebug.client_host=host.docker.internal/" \
